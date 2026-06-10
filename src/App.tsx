@@ -19,6 +19,7 @@ import { CONTENT } from './constants';
 
 const SLIDES = [
   'hero',
+  'slidePlanContext',
   'slideCapability',
   'slideAprilThroughput',
   'slideAprilAttach',
@@ -120,6 +121,8 @@ function renderSlide(index: number) {
   switch (SLIDES[index]) {
     case 'hero':
       return <SlideHero />;
+    case 'slidePlanContext':
+      return <SlidePlanContext />;
     case 'slideCapability':
       return <SlideCapability />;
     case 'slideAprilThroughput':
@@ -191,6 +194,63 @@ const SlideHero = () => {
           </div>
         </div>
       </div>
+    </div>
+  );
+};
+
+const SlidePlanContext = () => {
+  const { title, subtitle, intro, items, conclusion } = CONTENT.slidePlanContext;
+
+  return (
+    <div className="presentation-slide flex flex-col">
+      <SlideHeader title={title} subtitle={subtitle} />
+      <p className="text-base lg:text-xl font-bold text-slate-600 mb-4 lg:mb-5 text-right leading-relaxed">
+        {intro}
+      </p>
+      <ul className="flex-1 space-y-2 lg:space-y-3 list-none m-0 p-0 content-center">
+        {items.map((item, i) => {
+          const isDone = item.status === 'done';
+          return (
+            <li
+              key={item.text}
+              className={`flex items-center gap-3 lg:gap-4 p-4 lg:p-5 rounded-xl lg:rounded-2xl border-2 shadow-sm text-right ${
+                isDone
+                  ? 'bg-emerald-50 border-emerald-300/70'
+                  : 'bg-white border-slate-100'
+              }`}
+            >
+              <div
+                className={`w-10 h-10 lg:w-11 lg:h-11 rounded-xl flex items-center justify-center shrink-0 ${
+                  isDone ? 'bg-emerald-100 text-emerald-600' : 'bg-slate-100 text-slate-400'
+                }`}
+              >
+                {isDone ? (
+                  <CheckCircle2 size={22} strokeWidth={2.25} />
+                ) : (
+                  <span className="font-black text-base">{i + 1}</span>
+                )}
+              </div>
+              <span
+                className={`flex-1 text-sm lg:text-lg font-bold leading-relaxed ${
+                  isDone ? 'text-emerald-900' : 'text-slate-600'
+                }`}
+              >
+                {item.text}
+              </span>
+              <span
+                className={`px-3 py-1 rounded-full text-xs lg:text-sm font-black shrink-0 ${
+                  isDone ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-400'
+                }`}
+              >
+                {item.note}
+              </span>
+            </li>
+          );
+        })}
+      </ul>
+      <p className="mt-4 lg:mt-5 p-4 lg:p-5 rounded-xl bg-brand-blue/5 border border-brand-blue/10 text-sm lg:text-base font-bold text-brand-blue text-right leading-relaxed">
+        {conclusion}
+      </p>
     </div>
   );
 };
