@@ -25,7 +25,6 @@ import {
   Sunrise,
   CalendarDays,
   AlertTriangle,
-  Vote,
 } from 'lucide-react';
 import { CONTENT } from './constants';
 
@@ -34,19 +33,15 @@ const SLIDES = [
   'slidePlanContext',
   'slideCapability',
   'slideAprilThroughput',
-  'slideAprilAttach',
   'slideMayBaseline',
   'slideMay27',
-  'slideDataMeaning',
-  'slideTakeaway',
   'slideActivationIntro',
   'slideDigitalMenu',
   'slideB2B',
   'slideSummerDraft',
-  'slideVoting',
   'slideEarlyBird',
   'slideRolloutDiscipline',
-  'slideActivationSummary',
+  'slideTakeaway',
   'thanks',
 ] as const;
 
@@ -147,16 +142,10 @@ function renderSlide(index: number) {
       return <SlideCapability />;
     case 'slideAprilThroughput':
       return <SlideAprilThroughput />;
-    case 'slideAprilAttach':
-      return <SlideAprilAttach />;
     case 'slideMayBaseline':
       return <SlideMayBaseline />;
     case 'slideMay27':
       return <SlideMay27 />;
-    case 'slideDataMeaning':
-      return <SlideDataMeaning />;
-    case 'slideTakeaway':
-      return <SlideTakeaway />;
     case 'slideActivationIntro':
       return <SlideActivationIntro />;
     case 'slideDigitalMenu':
@@ -165,14 +154,12 @@ function renderSlide(index: number) {
       return <SlideB2B />;
     case 'slideSummerDraft':
       return <SlideSummerDraft />;
-    case 'slideVoting':
-      return <SlideVoting />;
     case 'slideEarlyBird':
       return <SlideEarlyBird />;
     case 'slideRolloutDiscipline':
       return <SlideRolloutDiscipline />;
-    case 'slideActivationSummary':
-      return <SlideActivationSummary />;
+    case 'slideTakeaway':
+      return <SlideTakeaway />;
     case 'thanks':
       return <SlideThanks />;
     default:
@@ -352,7 +339,7 @@ const SlideCapability = () => {
 };
 
 const SlideAprilThroughput = () => {
-  const { title, subtitle, avgLabel, peakLabel, stats, body, conclusion } =
+  const { title, subtitle, avgLabel, peakLabel, stats, attachments, highlight, conclusion } =
     CONTENT.slideAprilThroughput;
 
   return (
@@ -396,63 +383,35 @@ const SlideAprilThroughput = () => {
           </span>
         </div>
 
-        <p className="text-sm lg:text-lg font-bold text-slate-600 text-right leading-relaxed p-4 lg:p-5 bg-white rounded-xl border border-slate-100 shadow-sm">
-          {body}
-        </p>
-      </div>
-      <p className="mt-3 lg:mt-4 p-4 lg:p-5 rounded-xl bg-amber-50 border border-amber-200 text-sm lg:text-base font-bold text-amber-800 text-right leading-relaxed">
-        {conclusion}
-      </p>
-    </div>
-  );
-};
-
-const SlideAprilAttach = () => {
-  const { title, subtitle, attachments, highlight, body, conclusion } = CONTENT.slideAprilAttach;
-
-  return (
-    <div className="presentation-slide flex flex-col">
-      <SlideHeader title={title} subtitle={subtitle} />
-      <div className="flex-1 flex flex-col gap-3 lg:gap-4 justify-center min-h-0">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 lg:gap-3">
           {attachments.map((item) => (
             <div
               key={item.label}
-              className="p-5 lg:p-6 bg-white rounded-2xl border border-slate-100 shadow-sm text-right"
+              className="flex items-center justify-between gap-3 p-3 lg:p-4 bg-white rounded-xl border border-slate-100 shadow-sm text-right"
             >
-              <p className="text-sm lg:text-base font-black text-slate-600 mb-3">{item.label}</p>
-              <p className="text-4xl lg:text-5xl font-black text-brand-blue mb-4" dir="ltr">
+              <span className="text-2xl lg:text-3xl font-black text-brand-blue shrink-0" dir="ltr">
                 {item.display}
-              </p>
-              <div className="h-3 w-full bg-slate-100 rounded-full overflow-hidden" dir="ltr">
-                <div
-                  className="h-full bg-gradient-to-r from-brand-blue to-amber-400 rounded-full"
-                  style={{ width: `${item.value}%` }}
-                />
-              </div>
+              </span>
+              <span className="text-xs lg:text-sm font-black text-slate-600">{item.label}</span>
             </div>
           ))}
         </div>
 
-        <div className="flex items-center gap-4 p-4 lg:p-5 bg-amber-50 rounded-2xl border-2 border-amber-200 text-right">
+        <div className="flex items-center gap-4 p-3 lg:p-4 bg-amber-50 rounded-2xl border-2 border-amber-200 text-right">
           <div className="flex items-center gap-1 shrink-0" dir="ltr">
             {Array.from({ length: 10 }).map((_, i) => (
               <Coffee
                 key={i}
-                size={20}
+                size={18}
                 strokeWidth={2.5}
                 className={i < 6 ? 'text-amber-500' : 'text-slate-300'}
               />
             ))}
           </div>
-          <p className="text-sm lg:text-lg font-black text-amber-800 leading-snug">{highlight}</p>
+          <p className="text-xs lg:text-base font-black text-amber-800 leading-snug">{highlight}</p>
         </div>
-
-        <p className="text-sm lg:text-base font-bold text-slate-600 text-right leading-relaxed p-4 lg:p-5 bg-white rounded-xl border border-slate-100 shadow-sm">
-          {body}
-        </p>
       </div>
-      <p className="mt-3 lg:mt-4 p-4 lg:p-5 rounded-xl bg-brand-blue/5 border border-brand-blue/10 text-sm lg:text-base font-bold text-brand-blue text-right leading-relaxed">
+      <p className="mt-3 lg:mt-4 p-4 lg:p-5 rounded-xl bg-amber-50 border border-amber-200 text-sm lg:text-base font-bold text-amber-800 text-right leading-relaxed">
         {conclusion}
       </p>
     </div>
@@ -584,74 +543,69 @@ const SlideMay27 = () => {
   );
 };
 
-const PILLAR_STYLES = [
-  { icon: Gauge, bg: 'bg-amber-100 text-amber-600', tag: 'bg-amber-100 text-amber-700', border: 'border-amber-300/70' },
-  { icon: Activity, bg: 'bg-brand-blue/10 text-brand-blue', tag: 'bg-brand-blue/10 text-brand-blue', border: 'border-brand-blue/20' },
-  { icon: Target, bg: 'bg-emerald-100 text-emerald-600', tag: 'bg-emerald-100 text-emerald-700', border: 'border-emerald-300/70' },
+const TAKEAWAY_TAG_STYLES = [
+  'bg-amber-100 text-amber-700',
+  'bg-brand-blue/10 text-brand-blue',
+  'bg-emerald-100 text-emerald-700',
 ];
 
-const SlideDataMeaning = () => {
-  const { title, pillars, body, conclusion } = CONTENT.slideDataMeaning;
+const TAKEAWAY_ACTION_ICONS = [Monitor, Building2, FlaskConical, CalendarDays];
+
+const SlideTakeaway = () => {
+  const { title, subtitle, proven, actions, finalStatement } = CONTENT.slideTakeaway;
 
   return (
     <div className="presentation-slide flex flex-col">
-      <SlideHeader title={title} />
-      <div className="flex-1 flex flex-col gap-4 lg:gap-5 justify-center min-h-0">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 lg:gap-4">
-          {pillars.map((pillar, i) => {
-            const style = PILLAR_STYLES[i];
-            const Icon = style.icon;
+      <SlideHeader title={title} subtitle={subtitle} />
+      <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4 content-center min-h-0">
+        <div className="flex flex-col gap-2 lg:gap-2.5">
+          <p className="text-[11px] lg:text-xs font-black text-slate-400 uppercase tracking-wide text-right">
+            {proven.heading}
+          </p>
+          {proven.items.map((item, i) => (
+            <div
+              key={item.tag}
+              className="flex items-center gap-3 p-3.5 lg:p-4 bg-white rounded-xl border border-slate-100 shadow-sm text-right"
+            >
+              <span
+                className={`px-3 py-1 rounded-full text-[11px] lg:text-sm font-black shrink-0 ${TAKEAWAY_TAG_STYLES[i]}`}
+              >
+                {item.tag}
+              </span>
+              <span className="text-xs lg:text-sm font-bold text-slate-700 leading-snug">{item.text}</span>
+            </div>
+          ))}
+        </div>
+
+        <div className="flex flex-col gap-2 lg:gap-2.5">
+          <p className="text-[11px] lg:text-xs font-black text-slate-400 uppercase tracking-wide text-right">
+            {actions.heading}
+          </p>
+          {actions.items.map((item, i) => {
+            const Icon = TAKEAWAY_ACTION_ICONS[i] ?? Activity;
             return (
               <div
-                key={pillar.title}
-                className={`flex flex-col items-center p-5 lg:p-7 bg-white rounded-2xl border-2 ${style.border} shadow-sm text-center`}
+                key={item.lead}
+                className="flex items-center gap-3 p-2.5 lg:p-3 bg-white rounded-xl border border-slate-100 shadow-sm text-right"
               >
-                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-4 ${style.bg}`}>
-                  <Icon size={28} strokeWidth={2.25} />
+                <div className="w-8 h-8 lg:w-9 lg:h-9 rounded-lg bg-brand-blue/10 text-brand-blue flex items-center justify-center shrink-0">
+                  <Icon size={16} strokeWidth={2.25} />
                 </div>
-                <span className={`px-3 py-1 rounded-full text-xs font-black mb-3 ${style.tag}`}>
-                  {pillar.tag}
+                <span className="text-xs lg:text-sm font-black text-brand-blue shrink-0">{item.lead}</span>
+                <span className="text-[11px] lg:text-sm font-bold text-slate-600 leading-snug">
+                  {item.action}
                 </span>
-                <p className="text-lg lg:text-2xl font-black text-brand-blue mb-2">{pillar.title}</p>
-                <p className="text-xs lg:text-sm font-semibold text-slate-600 leading-relaxed">{pillar.desc}</p>
               </div>
             );
           })}
         </div>
-
-        <p className="text-sm lg:text-lg font-bold text-slate-600 text-right leading-relaxed p-5 lg:p-6 bg-white rounded-2xl border border-slate-100 shadow-sm">
-          {body}
-        </p>
       </div>
-      <p className="mt-3 lg:mt-4 p-4 lg:p-5 rounded-xl bg-brand-blue text-white text-sm lg:text-lg font-bold text-right leading-relaxed shadow-lg shadow-brand-blue/20">
-        {conclusion}
-      </p>
-    </div>
-  );
-};
 
-const SlideTakeaway = () => {
-  const { title, blocks, finalStatement } = CONTENT.slideTakeaway;
-
-  return (
-    <div className="presentation-slide flex flex-col justify-center">
-      <SlideHeader title={title} />
-      <div className="flex flex-col gap-4 lg:gap-6">
-        {blocks.map((block, i) => (
-          <p
-            key={i}
-            className="text-base lg:text-xl font-semibold text-slate-600 leading-relaxed text-right p-5 lg:p-7 bg-white rounded-2xl border border-slate-100 shadow-sm"
-          >
-            {block}
-          </p>
-        ))}
-
-        <div className="flex items-start gap-4 p-5 lg:p-7 bg-brand-blue text-white rounded-2xl shadow-xl shadow-brand-blue/25 text-right">
-          <div className="w-11 h-11 lg:w-12 lg:h-12 rounded-xl bg-white/15 flex items-center justify-center shrink-0 mt-0.5">
-            <CheckCircle2 size={24} strokeWidth={2.25} />
-          </div>
-          <p className="text-base lg:text-xl font-black leading-relaxed">{finalStatement}</p>
+      <div className="mt-4 lg:mt-5 flex items-start gap-4 p-4 lg:p-6 bg-brand-blue text-white rounded-2xl shadow-xl shadow-brand-blue/25 text-right">
+        <div className="w-11 h-11 lg:w-12 lg:h-12 rounded-xl bg-white/15 flex items-center justify-center shrink-0 mt-0.5">
+          <CheckCircle2 size={24} strokeWidth={2.25} />
         </div>
+        <p className="text-sm lg:text-xl font-black leading-relaxed">{finalStatement}</p>
       </div>
     </div>
   );
@@ -748,8 +702,8 @@ const SlideDigitalMenu = () => {
     <div className="presentation-slide flex flex-col">
       <SlideHeader title={title} subtitle={subtitle} />
       <div className="flex-1 flex flex-col gap-3 justify-center min-h-0">
-        <PointList points={points} icons={[Monitor, Star, TrendingUp, QrCode, RefreshCw]} />
-        <p className="text-xs lg:text-sm font-bold text-slate-600 text-right leading-relaxed p-3 lg:p-4 bg-slate-50 rounded-xl border border-slate-100">
+        <PointList points={points} icons={[Monitor, Star, RefreshCw, QrCode, TrendingUp]} />
+        <p className="text-xs lg:text-sm font-bold text-amber-800 text-right leading-relaxed p-3 lg:p-4 bg-amber-50 rounded-xl border border-amber-200">
           {note}
         </p>
       </div>
@@ -784,7 +738,7 @@ const SlideB2B = () => {
 };
 
 const SlideSummerDraft = () => {
-  const { title, subtitle, concept, tests, decisionRule, metrics } = CONTENT.slideSummerDraft;
+  const { title, subtitle, concept, tests, voting, decisionRule, metrics } = CONTENT.slideSummerDraft;
 
   return (
     <div className="presentation-slide flex flex-col">
@@ -820,7 +774,12 @@ const SlideSummerDraft = () => {
           </div>
         </div>
 
-        <div className="flex items-center gap-3 p-3 lg:p-4 bg-amber-50 rounded-xl border-2 border-amber-200 text-right">
+        <div className="flex items-center gap-3 p-3 lg:p-3.5 bg-brand-blue text-white rounded-xl shadow-lg shadow-brand-blue/20 text-right">
+          <QrCode size={20} className="text-amber-300 shrink-0" strokeWidth={2.25} />
+          <p className="text-xs lg:text-sm font-black leading-snug">{voting}</p>
+        </div>
+
+        <div className="flex items-center gap-3 p-3 lg:p-3.5 bg-amber-50 rounded-xl border-2 border-amber-200 text-right">
           <AlertTriangle size={20} className="text-amber-500 shrink-0" strokeWidth={2.25} />
           <p className="text-xs lg:text-sm font-black text-amber-800 leading-snug">{decisionRule}</p>
         </div>
@@ -828,46 +787,6 @@ const SlideSummerDraft = () => {
       <div className="mt-3 lg:mt-4">
         <MetricsPanel metrics={metrics} />
       </div>
-    </div>
-  );
-};
-
-const SlideVoting = () => {
-  const { title, subtitle, steps, roles, finalMessage } = CONTENT.slideVoting;
-
-  return (
-    <div className="presentation-slide flex flex-col">
-      <SlideHeader title={title} subtitle={subtitle} />
-      <div className="flex-1 flex flex-col gap-3 lg:gap-4 justify-center min-h-0">
-        <ul className="space-y-2 lg:space-y-2.5 list-none m-0 p-0">
-          {steps.map((step, i) => (
-            <li
-              key={step}
-              className="flex items-center gap-3 p-3 lg:p-4 bg-white rounded-xl border border-slate-100 shadow-sm text-right"
-            >
-              <span className="w-9 h-9 rounded-lg bg-brand-blue/10 text-brand-blue font-black text-sm flex items-center justify-center shrink-0">
-                {i + 1}
-              </span>
-              <span className="text-xs lg:text-base font-bold text-slate-700 leading-snug">{step}</span>
-            </li>
-          ))}
-        </ul>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-2 lg:gap-3">
-          {roles.map((role) => (
-            <div
-              key={role}
-              className="flex items-center gap-2.5 p-3 lg:p-4 bg-slate-50 rounded-xl border border-slate-100 text-right"
-            >
-              <Vote size={18} className="text-brand-blue shrink-0" strokeWidth={2.25} />
-              <span className="text-[11px] lg:text-sm font-black text-slate-600 leading-snug">{role}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-      <p className="mt-3 lg:mt-4 p-4 lg:p-5 rounded-xl bg-brand-blue text-white text-base lg:text-xl font-black text-center leading-relaxed shadow-lg shadow-brand-blue/20">
-        {finalMessage}
-      </p>
     </div>
   );
 };
@@ -956,41 +875,6 @@ const SlideRolloutDiscipline = () => {
       </div>
       <p className="mt-3 lg:mt-4 p-4 rounded-xl bg-brand-blue/5 border border-brand-blue/10 text-xs lg:text-base font-bold text-brand-blue text-right leading-relaxed">
         {conclusion}
-      </p>
-    </div>
-  );
-};
-
-const SUMMARY_LINE_ICONS = [Monitor, Building2, FlaskConical, Target, CalendarDays];
-
-const SlideActivationSummary = () => {
-  const { title, subtitle, lines, finalMessage } = CONTENT.slideActivationSummary;
-
-  return (
-    <div className="presentation-slide flex flex-col">
-      <SlideHeader title={title} subtitle={subtitle} />
-      <ul className="flex-1 space-y-2 lg:space-y-3 list-none m-0 p-0 content-center">
-        {lines.map((line, i) => {
-          const Icon = SUMMARY_LINE_ICONS[i] ?? Activity;
-          return (
-            <li
-              key={line.lead}
-              className="flex items-center gap-3 lg:gap-4 p-3.5 lg:p-4 bg-white rounded-xl lg:rounded-2xl border border-slate-100 shadow-sm text-right"
-            >
-              <div className="w-10 h-10 lg:w-11 lg:h-11 rounded-xl bg-brand-blue/10 text-brand-blue flex items-center justify-center shrink-0">
-                <Icon size={20} strokeWidth={2.25} />
-              </div>
-              <span className="text-sm lg:text-lg font-black text-brand-blue shrink-0">{line.lead}</span>
-              <ArrowLeft size={16} className="text-amber-400 shrink-0" strokeWidth={3} />
-              <span className="flex-1 text-xs lg:text-base font-bold text-slate-600 leading-snug">
-                {line.action}
-              </span>
-            </li>
-          );
-        })}
-      </ul>
-      <p className="mt-4 lg:mt-5 p-4 lg:p-5 rounded-xl bg-brand-blue text-white text-sm lg:text-lg font-bold text-right leading-relaxed shadow-lg shadow-brand-blue/20">
-        {finalMessage}
       </p>
     </div>
   );
