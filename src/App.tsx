@@ -25,6 +25,7 @@ import {
   Sunrise,
   CalendarDays,
   AlertTriangle,
+  Truck,
 } from 'lucide-react';
 import { CONTENT } from './constants';
 
@@ -38,6 +39,7 @@ const SLIDES = [
   'slideActivationIntro',
   'slideDigitalMenu',
   'slideB2B',
+  'slideTowers',
   'slideSummerDraft',
   'slideEarlyBird',
   'slideRolloutDiscipline',
@@ -152,6 +154,8 @@ function renderSlide(index: number) {
       return <SlideDigitalMenu />;
     case 'slideB2B':
       return <SlideB2B />;
+    case 'slideTowers':
+      return <SlideTowers />;
     case 'slideSummerDraft':
       return <SlideSummerDraft />;
     case 'slideEarlyBird':
@@ -651,46 +655,66 @@ const PointList = ({
   </ul>
 );
 
-const ACTIVATION_OBJECTIVE_STYLES = [
-  { icon: Monitor, bg: 'bg-brand-blue/10 text-brand-blue', border: 'border-brand-blue/20' },
-  { icon: Building2, bg: 'bg-emerald-100 text-emerald-600', border: 'border-emerald-300/70' },
-  { icon: FlaskConical, bg: 'bg-amber-100 text-amber-600', border: 'border-amber-300/70' },
-];
+const ACTIVATION_OBJECTIVE_ICONS = [Monitor, Building2, FlaskConical];
 
 const SlideActivationIntro = () => {
-  const { title, subtitle, intro, objectives, rule, conclusion } = CONTENT.slideActivationIntro;
+  const { eyebrow, badge, title, subtitle, intro, objectives, rule, conclusion } =
+    CONTENT.slideActivationIntro;
 
   return (
-    <div className="presentation-slide flex flex-col">
-      <SlideHeader title={title} subtitle={subtitle} />
-      <p className="text-sm lg:text-lg font-bold text-slate-600 mb-4 lg:mb-5 text-right leading-relaxed">
-        {intro}
-      </p>
-      <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-3 lg:gap-4 content-center">
-        {objectives.map((obj, i) => {
-          const style = ACTIVATION_OBJECTIVE_STYLES[i];
-          const Icon = style.icon;
-          return (
-            <div
-              key={obj.title}
-              className={`flex flex-col items-center p-5 lg:p-6 bg-white rounded-2xl border-2 ${style.border} shadow-sm text-center`}
-            >
-              <div className={`w-13 h-13 lg:w-14 lg:h-14 rounded-2xl flex items-center justify-center mb-3 ${style.bg}`}>
-                <Icon size={26} strokeWidth={2.25} />
+    <div className="presentation-slide !p-0 flex items-stretch">
+      <div className="relative w-full h-full rounded-[2rem] lg:rounded-[2.5rem] bg-gradient-to-br from-brand-blue via-[#2a3c7a] to-[#1d2b5c] overflow-hidden shadow-2xl shadow-brand-blue/30 flex flex-col justify-center p-6 md:p-10 lg:p-14">
+        <div className="pointer-events-none absolute -top-32 -left-32 w-[420px] h-[420px] bg-amber-400/15 rounded-full blur-[110px]" />
+        <div className="pointer-events-none absolute -bottom-40 -right-20 w-[420px] h-[420px] bg-white/10 rounded-full blur-[110px]" />
+
+        <div className="relative flex items-center justify-between gap-4 mb-5 lg:mb-7">
+          <div className="flex items-center gap-3 text-right">
+            <span className="px-4 py-2 rounded-full bg-amber-400 text-brand-dark text-sm lg:text-lg font-black shadow-lg shadow-amber-400/30 whitespace-nowrap">
+              {badge} ←
+            </span>
+            <span className="text-xs lg:text-base font-black text-white/70 tracking-wide">{eyebrow}</span>
+          </div>
+          <span className="hidden md:block h-px flex-1 bg-gradient-to-l from-amber-400/60 to-transparent" />
+        </div>
+
+        <div className="relative text-right mb-3 lg:mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-[3.25rem] font-black text-white leading-tight mb-2">
+            {title}
+          </h2>
+          <p className="text-base lg:text-2xl font-bold text-amber-300">{subtitle}</p>
+        </div>
+
+        <p className="relative text-sm lg:text-lg font-bold text-white/75 mb-5 lg:mb-7 text-right leading-relaxed max-w-4xl mr-0 ml-auto">
+          {intro}
+        </p>
+
+        <div className="relative grid grid-cols-1 md:grid-cols-3 gap-3 lg:gap-4 mb-5 lg:mb-7">
+          {objectives.map((obj, i) => {
+            const Icon = ACTIVATION_OBJECTIVE_ICONS[i] ?? Activity;
+            return (
+              <div
+                key={obj.title}
+                className="flex flex-col items-center p-4 lg:p-6 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/15 text-center"
+              >
+                <div className="w-12 h-12 lg:w-14 lg:h-14 rounded-2xl bg-amber-400/20 text-amber-300 flex items-center justify-center mb-3">
+                  <Icon size={26} strokeWidth={2.25} />
+                </div>
+                <p className="text-base lg:text-xl font-black text-white mb-1.5">{obj.title}</p>
+                <p className="text-xs lg:text-sm font-semibold text-white/70 leading-relaxed">{obj.desc}</p>
               </div>
-              <p className="text-base lg:text-xl font-black text-brand-blue mb-1.5">{obj.title}</p>
-              <p className="text-xs lg:text-sm font-semibold text-slate-600 leading-relaxed">{obj.desc}</p>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
+
+        <div className="relative flex items-center gap-3 p-4 lg:p-5 bg-amber-400 text-brand-dark rounded-xl shadow-lg shadow-amber-400/25 text-right">
+          <Target size={22} className="shrink-0" strokeWidth={2.5} />
+          <p className="text-sm lg:text-lg font-black leading-snug">{rule}</p>
+        </div>
+
+        <p className="relative mt-3 text-xs lg:text-base font-bold text-white/65 text-right leading-relaxed">
+          {conclusion}
+        </p>
       </div>
-      <div className="mt-4 flex items-center gap-3 p-4 lg:p-5 bg-brand-blue text-white rounded-xl shadow-lg shadow-brand-blue/20 text-right">
-        <Target size={22} className="shrink-0 text-amber-300" strokeWidth={2.25} />
-        <p className="text-sm lg:text-lg font-black leading-snug">{rule}</p>
-      </div>
-      <p className="mt-2 lg:mt-3 p-3 lg:p-4 rounded-xl bg-amber-50 border border-amber-200 text-xs lg:text-base font-bold text-amber-800 text-right leading-relaxed">
-        {conclusion}
-      </p>
     </div>
   );
 };
@@ -727,6 +751,61 @@ const SlideB2B = () => {
           accent="bg-emerald-100 text-emerald-600"
         />
         <p className="text-xs lg:text-sm font-bold text-emerald-800 text-right leading-relaxed p-3 lg:p-4 bg-emerald-50 rounded-xl border border-emerald-200">
+          {note}
+        </p>
+      </div>
+      <div className="mt-3 lg:mt-4">
+        <MetricsPanel metrics={metrics} />
+      </div>
+    </div>
+  );
+};
+
+const TOWER_OFFER_ICONS = [BadgePercent, Truck, CalendarDays];
+
+const SlideTowers = () => {
+  const { title, subtitle, schedule, offers, note, metrics } = CONTENT.slideTowers;
+
+  return (
+    <div className="presentation-slide flex flex-col">
+      <SlideHeader title={title} subtitle={subtitle} />
+      <div className="flex-1 flex flex-col gap-3 justify-center min-h-0">
+        <div className="grid grid-cols-4 md:grid-cols-7 gap-1.5 lg:gap-2">
+          {schedule.map((slot) => (
+            <div
+              key={slot.day}
+              className="flex flex-col items-center p-2.5 lg:p-3 bg-white rounded-xl border border-slate-100 shadow-sm text-center"
+            >
+              <p className="text-[10px] lg:text-xs font-black text-slate-400 mb-1">{slot.day}</p>
+              <div className="w-8 h-8 lg:w-9 lg:h-9 rounded-lg bg-brand-blue/10 text-brand-blue flex items-center justify-center mb-1">
+                <Building2 size={16} strokeWidth={2.25} />
+              </div>
+              <p className="text-[11px] lg:text-sm font-black text-brand-blue">{slot.tower}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-2 lg:gap-3">
+          {offers.map((offer, i) => {
+            const Icon = TOWER_OFFER_ICONS[i] ?? Activity;
+            return (
+              <div
+                key={offer.label}
+                className="flex items-center gap-3 p-3 lg:p-4 bg-white rounded-xl border border-slate-100 shadow-sm text-right"
+              >
+                <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
+                  <Icon size={19} strokeWidth={2.25} />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-[10px] lg:text-xs font-black text-slate-400 mb-0.5">{offer.label}</p>
+                  <p className="text-xs lg:text-sm font-black text-slate-700 leading-snug">{offer.value}</p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        <p className="text-xs lg:text-sm font-bold text-slate-600 text-right leading-relaxed p-3 lg:p-4 bg-slate-50 rounded-xl border border-slate-100">
           {note}
         </p>
       </div>
