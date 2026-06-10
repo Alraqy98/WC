@@ -42,7 +42,6 @@ const SLIDES = [
   'slideTowers',
   'slideSummerDraft',
   'slideEarlyBird',
-  'slideRolloutDiscipline',
   'slideTakeaway',
   'thanks',
 ] as const;
@@ -160,8 +159,6 @@ function renderSlide(index: number) {
       return <SlideSummerDraft />;
     case 'slideEarlyBird':
       return <SlideEarlyBird />;
-    case 'slideRolloutDiscipline':
-      return <SlideRolloutDiscipline />;
     case 'slideTakeaway':
       return <SlideTakeaway />;
     case 'thanks':
@@ -553,7 +550,7 @@ const TAKEAWAY_TAG_STYLES = [
   'bg-emerald-100 text-emerald-700',
 ];
 
-const TAKEAWAY_ACTION_ICONS = [Monitor, Building2, FlaskConical, CalendarDays];
+const TAKEAWAY_ACTION_ICONS = [Monitor, Building2, FlaskConical];
 
 const SlideTakeaway = () => {
   const { title, subtitle, proven, actions, finalStatement } = CONTENT.slideTakeaway;
@@ -906,55 +903,6 @@ const SlideEarlyBird = () => {
       <div className="mt-3 lg:mt-4">
         <MetricsPanel metrics={metrics} />
       </div>
-    </div>
-  );
-};
-
-const SlideRolloutDiscipline = () => {
-  const { title, subtitle, calendarItems, rule, risks, conclusion } = CONTENT.slideRolloutDiscipline;
-
-  return (
-    <div className="presentation-slide flex flex-col">
-      <SlideHeader title={title} subtitle={subtitle} />
-      <div className="flex-1 flex flex-col gap-3 lg:gap-4 justify-center min-h-0">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 lg:gap-2.5">
-          {calendarItems.map((item) => (
-            <div
-              key={item}
-              className="flex items-center gap-3 p-3 lg:p-4 bg-white rounded-xl border border-slate-100 shadow-sm text-right"
-            >
-              <div className="w-9 h-9 rounded-lg bg-brand-blue/10 text-brand-blue flex items-center justify-center shrink-0">
-                <CalendarDays size={17} strokeWidth={2.25} />
-              </div>
-              <span className="text-xs lg:text-base font-bold text-slate-700 leading-snug">{item}</span>
-            </div>
-          ))}
-        </div>
-
-        <div className="flex items-center gap-3 p-4 lg:p-5 bg-rose-50 rounded-xl border-2 border-rose-200 text-right">
-          <AlertTriangle size={22} className="text-rose-500 shrink-0" strokeWidth={2.25} />
-          <p className="text-sm lg:text-lg font-black text-rose-700 leading-snug">{rule}</p>
-        </div>
-
-        <div className="text-right">
-          <p className="text-[11px] lg:text-xs font-black text-slate-400 uppercase tracking-wide mb-1.5">
-            العروض المعرضة للتداخل
-          </p>
-          <div className="flex flex-wrap gap-1.5 lg:gap-2 justify-start">
-            {risks.map((risk) => (
-              <span
-                key={risk}
-                className="px-3 py-1.5 rounded-full bg-slate-100 text-slate-600 text-[11px] lg:text-sm font-black"
-              >
-                {risk}
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
-      <p className="mt-3 lg:mt-4 p-4 rounded-xl bg-brand-blue/5 border border-brand-blue/10 text-xs lg:text-base font-bold text-brand-blue text-right leading-relaxed">
-        {conclusion}
-      </p>
     </div>
   );
 };
