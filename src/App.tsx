@@ -2,47 +2,35 @@ import { useState, useEffect, useCallback } from 'react';
 import {
   ArrowLeft,
   ArrowRight,
-  Activity,
-  Gauge,
-  Coffee,
-  Croissant,
-  Receipt,
-  Package,
-  Banknote,
+  Sticker,
+  Gift,
+  Trophy,
   TrendingUp,
-  Target,
-  Lightbulb,
-  BadgePercent,
-  CheckCircle2,
-  Monitor,
-  Building2,
-  FlaskConical,
-  QrCode,
-  RefreshCw,
-  Star,
-  CreditCard,
-  Megaphone,
-  Sunrise,
+  Sparkles,
+  ShieldCheck,
+  Globe2,
   CalendarDays,
-  AlertTriangle,
-  Truck,
+  Layers,
+  Repeat,
+  CheckCircle2,
+  Ticket,
+  ClipboardList,
+  Palette,
+  Star,
+  Coffee,
 } from 'lucide-react';
 import { CONTENT } from './constants';
 
 const SLIDES = [
   'hero',
-  'slidePlanContext',
-  'slideCapability',
-  'slideAprilThroughput',
-  'slideMayBaseline',
-  'slideMay27',
-  'slideActivationIntro',
-  'slideDigitalMenu',
-  'slideB2B',
-  'slideTowers',
-  'slideSummerDraft',
-  'slideEarlyBird',
-  'slideTakeaway',
+  'overview',
+  'offer',
+  'groups',
+  'rewards',
+  'journey',
+  'requirements',
+  'rules',
+  'approve',
   'thanks',
 ] as const;
 
@@ -137,30 +125,22 @@ function renderSlide(index: number) {
   switch (SLIDES[index]) {
     case 'hero':
       return <SlideHero />;
-    case 'slidePlanContext':
-      return <SlidePlanContext />;
-    case 'slideCapability':
-      return <SlideCapability />;
-    case 'slideAprilThroughput':
-      return <SlideAprilThroughput />;
-    case 'slideMayBaseline':
-      return <SlideMayBaseline />;
-    case 'slideMay27':
-      return <SlideMay27 />;
-    case 'slideActivationIntro':
-      return <SlideActivationIntro />;
-    case 'slideDigitalMenu':
-      return <SlideDigitalMenu />;
-    case 'slideB2B':
-      return <SlideB2B />;
-    case 'slideTowers':
-      return <SlideTowers />;
-    case 'slideSummerDraft':
-      return <SlideSummerDraft />;
-    case 'slideEarlyBird':
-      return <SlideEarlyBird />;
-    case 'slideTakeaway':
-      return <SlideTakeaway />;
+    case 'overview':
+      return <SlideOverview />;
+    case 'offer':
+      return <SlideOffer />;
+    case 'groups':
+      return <SlideGroups />;
+    case 'rewards':
+      return <SlideRewards />;
+    case 'journey':
+      return <SlideJourney />;
+    case 'requirements':
+      return <SlideRequirements />;
+    case 'rules':
+      return <SlideRules />;
+    case 'approve':
+      return <SlideApprove />;
     case 'thanks':
       return <SlideThanks />;
     default:
@@ -182,8 +162,6 @@ function SlideHeader({ title, subtitle }: { title: string; subtitle?: string }) 
   );
 }
 
-const STAT_ICONS = [Receipt, Package, Banknote, Coffee, Croissant];
-
 const SlideHero = () => {
   const { brand, subtitle, consultant } = CONTENT.hero;
 
@@ -193,7 +171,7 @@ const SlideHero = () => {
         className="pointer-events-none absolute inset-0 opacity-[0.035] select-none flex items-center justify-center"
         aria-hidden
       >
-        <span className="text-[28rem] font-black text-brand-blue tracking-tighter leading-none">BB</span>
+        <Trophy className="text-brand-blue" style={{ width: '26rem', height: '26rem' }} strokeWidth={1} />
       </div>
 
       <div className="relative w-full max-w-3xl mx-auto">
@@ -205,11 +183,11 @@ const SlideHero = () => {
             <span className="h-px w-12 lg:w-16 bg-gradient-to-r from-transparent to-brand-blue/30" />
           </div>
 
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-black text-brand-blue tracking-tight leading-none mb-5 lg:mb-6">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-brand-blue tracking-tight leading-tight mb-5 lg:mb-6">
             {brand}
           </h1>
 
-          <p className="text-2xl md:text-3xl lg:text-[2.125rem] font-bold text-brand-blue/75 leading-relaxed max-w-xl mx-auto">
+          <p className="text-xl md:text-2xl lg:text-[1.875rem] font-bold text-brand-blue/75 leading-relaxed max-w-2xl mx-auto">
             {subtitle}
           </p>
 
@@ -222,338 +200,256 @@ const SlideHero = () => {
   );
 };
 
-const SlidePlanContext = () => {
-  const { title, subtitle, intro, items, conclusion } = CONTENT.slidePlanContext;
+const OVERVIEW_ICONS = [TrendingUp, Sparkles, Globe2, ShieldCheck];
+
+const SlideOverview = () => {
+  const { title, subtitle, intro, objectives, note } = CONTENT.overview;
 
   return (
     <div className="presentation-slide flex flex-col">
       <SlideHeader title={title} subtitle={subtitle} />
-      <p className="text-base lg:text-xl font-bold text-slate-600 mb-4 lg:mb-5 text-right leading-relaxed">
+      <p className="text-sm lg:text-lg font-bold text-slate-600 mb-4 lg:mb-5 text-right leading-relaxed">
         {intro}
       </p>
-      <ul className="flex-1 space-y-2 lg:space-y-3 list-none m-0 p-0 content-center">
-        {items.map((item, i) => {
-          const isDone = item.status === 'done';
-          return (
-            <li
-              key={item.text}
-              className={`flex items-center gap-3 lg:gap-4 p-4 lg:p-5 rounded-xl lg:rounded-2xl border-2 shadow-sm text-right ${
-                isDone
-                  ? 'bg-emerald-50 border-emerald-300/70'
-                  : 'bg-white border-slate-100'
-              }`}
-            >
-              <div
-                className={`w-10 h-10 lg:w-11 lg:h-11 rounded-xl flex items-center justify-center shrink-0 ${
-                  isDone ? 'bg-emerald-100 text-emerald-600' : 'bg-slate-100 text-slate-400'
-                }`}
-              >
-                {isDone ? (
-                  <CheckCircle2 size={22} strokeWidth={2.25} />
-                ) : (
-                  <span className="font-black text-base">{i + 1}</span>
-                )}
-              </div>
-              <span
-                className={`flex-1 text-sm lg:text-lg font-bold leading-relaxed ${
-                  isDone ? 'text-emerald-900' : 'text-slate-600'
-                }`}
-              >
-                {item.text}
-              </span>
-              <span
-                className={`px-3 py-1 rounded-full text-xs lg:text-sm font-black shrink-0 ${
-                  isDone ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-400'
-                }`}
-              >
-                {item.note}
-              </span>
-            </li>
-          );
-        })}
-      </ul>
-      <p className="mt-4 lg:mt-5 p-4 lg:p-5 rounded-xl bg-brand-blue/5 border border-brand-blue/10 text-sm lg:text-base font-bold text-brand-blue text-right leading-relaxed">
-        {conclusion}
-      </p>
-    </div>
-  );
-};
-
-const REALITY_STYLES = [
-  {
-    border: 'border-amber-300/70',
-    tagBg: 'bg-amber-100 text-amber-700',
-    icon: Gauge,
-    iconBg: 'bg-amber-100 text-amber-600',
-  },
-  {
-    border: 'border-brand-blue/20',
-    tagBg: 'bg-brand-blue/10 text-brand-blue',
-    icon: Activity,
-    iconBg: 'bg-brand-blue/10 text-brand-blue',
-  },
-  {
-    border: 'border-emerald-300/70',
-    tagBg: 'bg-emerald-100 text-emerald-700',
-    icon: Lightbulb,
-    iconBg: 'bg-emerald-100 text-emerald-600',
-  },
-];
-
-const SlideCapability = () => {
-  const { title, subtitle, intro, realities, conclusion } = CONTENT.slideCapability;
-
-  return (
-    <div className="presentation-slide flex flex-col">
-      <SlideHeader title={title} subtitle={subtitle} />
-      <p className="text-base lg:text-xl font-bold text-slate-600 mb-4 lg:mb-5 text-right leading-relaxed">
-        {intro}
-      </p>
-      <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-3 lg:gap-4 content-center">
-        {realities.map((reality, i) => {
-          const style = REALITY_STYLES[i];
-          const Icon = style.icon;
+      <div className="flex-1 grid grid-cols-2 md:grid-cols-4 gap-3 lg:gap-4 content-center">
+        {objectives.map((obj, i) => {
+          const Icon = OVERVIEW_ICONS[i] ?? Sparkles;
           return (
             <div
-              key={reality.title}
-              className={`flex flex-col p-5 lg:p-6 bg-white rounded-2xl border-2 ${style.border} shadow-sm text-right`}
+              key={obj.title}
+              className="flex flex-col p-4 lg:p-5 bg-white rounded-2xl border-2 border-slate-100 shadow-sm text-right"
             >
-              <div className="flex items-center justify-between mb-3">
-                <div className={`w-11 h-11 rounded-xl flex items-center justify-center ${style.iconBg}`}>
-                  <Icon size={22} strokeWidth={2.25} />
-                </div>
-                <span className={`px-3 py-1 rounded-full text-xs lg:text-sm font-black ${style.tagBg}`} dir="rtl">
-                  {reality.tag}
-                </span>
+              <div className="w-11 h-11 rounded-xl bg-brand-blue/10 text-brand-blue flex items-center justify-center mb-3">
+                <Icon size={22} strokeWidth={2.25} />
               </div>
-              <p className="text-base lg:text-xl font-black text-brand-blue mb-2">{reality.title}</p>
-              <p className="text-xs lg:text-sm font-semibold text-slate-600 leading-relaxed">{reality.desc}</p>
+              <p className="text-base lg:text-lg font-black text-brand-blue mb-1.5">{obj.title}</p>
+              <p className="text-xs lg:text-sm font-semibold text-slate-600 leading-relaxed">{obj.desc}</p>
             </div>
           );
         })}
       </div>
-      <p className="mt-4 lg:mt-5 p-4 lg:p-5 rounded-xl bg-brand-blue text-white text-sm lg:text-lg font-bold text-right leading-relaxed shadow-lg shadow-brand-blue/20">
-        {conclusion}
+      <p className="mt-4 lg:mt-5 p-4 lg:p-5 rounded-xl bg-emerald-50 border border-emerald-200 text-sm lg:text-base font-bold text-emerald-800 text-right leading-relaxed">
+        {note}
       </p>
     </div>
   );
 };
 
-const SlideAprilThroughput = () => {
-  const { title, subtitle, avgLabel, peakLabel, stats, attachments, highlight, conclusion } =
-    CONTENT.slideAprilThroughput;
+const SlideOffer = () => {
+  const { title, subtitle, bundle, options, note } = CONTENT.offer;
 
   return (
     <div className="presentation-slide flex flex-col">
       <SlideHeader title={title} subtitle={subtitle} />
-      <div className="flex-1 flex flex-col gap-3 lg:gap-4 justify-center min-h-0">
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-2 lg:gap-3">
-          {stats.map((stat, i) => {
-            const Icon = STAT_ICONS[i] ?? Activity;
-            return (
-              <div
-                key={stat.label}
-                className="flex flex-col p-3 lg:p-4 bg-white rounded-xl lg:rounded-2xl border border-slate-100 shadow-sm text-center"
-              >
-                <div className="w-9 h-9 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center mx-auto mb-2">
-                  <Icon size={18} strokeWidth={2.25} />
-                </div>
-                <p className="text-[11px] lg:text-xs font-black text-slate-500 mb-1">{stat.label}</p>
-                <p className="text-xl lg:text-3xl font-black text-brand-blue leading-none" dir="ltr">
-                  {stat.avg}
-                </p>
-                <div className="mt-2 pt-2 border-t border-slate-100 flex items-center justify-center gap-1">
-                  <TrendingUp size={13} className="text-emerald-500 shrink-0" />
-                  <span className="text-xs lg:text-sm font-black text-emerald-600" dir="ltr">
-                    {stat.peak}
-                  </span>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        <div className="flex items-center justify-center gap-5 lg:gap-8 text-xs lg:text-sm font-bold text-slate-500">
-          <span className="flex items-center gap-2">
-            <span className="w-3 h-3 rounded-full bg-brand-blue inline-block" />
-            {avgLabel}
-          </span>
-          <span className="flex items-center gap-2">
-            <span className="w-3 h-3 rounded-full bg-emerald-500 inline-block" />
-            {peakLabel}
-          </span>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 lg:gap-3">
-          {attachments.map((item) => (
-            <div
-              key={item.label}
-              className="flex items-center justify-between gap-3 p-3 lg:p-4 bg-white rounded-xl border border-slate-100 shadow-sm text-right"
-            >
-              <span className="text-2xl lg:text-3xl font-black text-brand-blue shrink-0" dir="ltr">
-                {item.display}
-              </span>
-              <span className="text-xs lg:text-sm font-black text-slate-600">{item.label}</span>
-            </div>
-          ))}
-        </div>
-
-        <div className="flex items-center gap-4 p-3 lg:p-4 bg-amber-50 rounded-2xl border-2 border-amber-200 text-right">
-          <div className="flex items-center gap-1 shrink-0" dir="ltr">
-            {Array.from({ length: 10 }).map((_, i) => (
-              <Coffee
-                key={i}
-                size={18}
-                strokeWidth={2.5}
-                className={i < 6 ? 'text-amber-500' : 'text-slate-300'}
-              />
-            ))}
-          </div>
-          <p className="text-xs lg:text-base font-black text-amber-800 leading-snug">{highlight}</p>
-        </div>
-      </div>
-      <p className="mt-3 lg:mt-4 p-4 lg:p-5 rounded-xl bg-amber-50 border border-amber-200 text-sm lg:text-base font-bold text-amber-800 text-right leading-relaxed">
-        {conclusion}
-      </p>
-    </div>
-  );
-};
-
-const SlideMayBaseline = () => {
-  const { title, subtitle, avgLabel, stats, attachments, body, conclusion } =
-    CONTENT.slideMayBaseline;
-
-  return (
-    <div className="presentation-slide flex flex-col">
-      <SlideHeader title={title} subtitle={subtitle} />
-      <div className="flex-1 flex flex-col gap-3 lg:gap-4 justify-center min-h-0">
-        <p className="text-xs lg:text-sm font-black text-slate-400 text-right uppercase tracking-wide">
-          {avgLabel} — مقارنةً بمتوسط أبريل
-        </p>
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-2 lg:gap-3">
-          {stats.map((stat, i) => {
-            const Icon = STAT_ICONS[i] ?? Activity;
-            return (
-              <div
-                key={stat.label}
-                className="flex flex-col p-3 lg:p-4 bg-white rounded-xl lg:rounded-2xl border border-slate-100 shadow-sm text-center"
-              >
-                <div className="w-9 h-9 rounded-lg bg-brand-blue/10 text-brand-blue flex items-center justify-center mx-auto mb-2">
-                  <Icon size={18} strokeWidth={2.25} />
-                </div>
-                <p className="text-[11px] lg:text-xs font-black text-slate-500 mb-1">{stat.label}</p>
-                <p className="text-xl lg:text-3xl font-black text-brand-blue leading-none" dir="ltr">
-                  {stat.value}
-                </p>
-                <div className="mt-2 pt-2 border-t border-slate-100">
-                  <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden mb-1" dir="ltr">
-                    <div
-                      className="h-full bg-brand-blue/60 rounded-full"
-                      style={{ width: `${stat.ratio}%` }}
-                    />
-                  </div>
-                  <p className="text-[10px] lg:text-[11px] font-bold text-slate-400">
-                    أبريل: <span dir="ltr">{stat.aprilAvg}</span>
-                  </p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 lg:gap-3">
-          {attachments.map((item) => (
-            <div
-              key={item.label}
-              className="flex items-center justify-between gap-3 p-3 lg:p-4 bg-slate-50 rounded-xl border border-slate-100 text-right"
-            >
-              <span className="text-2xl lg:text-3xl font-black text-brand-blue shrink-0" dir="ltr">
-                {item.display}
-              </span>
-              <span className="text-xs lg:text-sm font-black text-slate-600">{item.label}</span>
-            </div>
-          ))}
-        </div>
-
-        <p className="text-sm lg:text-base font-bold text-slate-600 text-right leading-relaxed p-4 bg-white rounded-xl border border-slate-100 shadow-sm">
-          {body}
-        </p>
-      </div>
-      <p className="mt-3 lg:mt-4 p-4 lg:p-5 rounded-xl bg-brand-blue text-white text-sm lg:text-base font-bold text-right leading-relaxed shadow-lg shadow-brand-blue/20">
-        {conclusion}
-      </p>
-    </div>
-  );
-};
-
-const SlideMay27 = () => {
-  const { title, subtitle, bundle, stats, attachments, conclusion } = CONTENT.slideMay27;
-
-  return (
-    <div className="presentation-slide flex flex-col">
-      <SlideHeader title={title} subtitle={subtitle} />
-      <div className="flex-1 flex flex-col gap-3 lg:gap-4 justify-center min-h-0">
-        <div className="flex items-center gap-4 lg:gap-5 p-4 lg:p-5 bg-emerald-600 text-white rounded-2xl shadow-lg shadow-emerald-600/20 text-right">
-          <div className="w-12 h-12 lg:w-14 lg:h-14 rounded-xl bg-white/15 flex items-center justify-center shrink-0">
-            <BadgePercent size={26} strokeWidth={2.25} />
+      <div className="flex-1 flex flex-col gap-4 lg:gap-5 justify-center min-h-0">
+        <div className="flex items-center gap-4 lg:gap-5 p-5 lg:p-6 bg-brand-blue text-white rounded-2xl shadow-lg shadow-brand-blue/20 text-right">
+          <div className="w-14 h-14 lg:w-16 lg:h-16 rounded-xl bg-amber-400/20 text-amber-300 flex items-center justify-center shrink-0">
+            <Coffee size={30} strokeWidth={2.25} />
           </div>
           <div>
-            <p className="text-2xl lg:text-3xl font-black leading-none mb-1">{bundle.price}</p>
-            <p className="text-sm lg:text-base font-bold text-white/85">{bundle.desc}</p>
+            <p className="text-2xl lg:text-4xl font-black leading-none mb-1.5">{bundle.price}</p>
+            <p className="text-sm lg:text-lg font-bold text-white/85 leading-relaxed">{bundle.desc}</p>
           </div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-2 lg:gap-3">
-          {stats.map((stat, i) => {
-            const Icon = STAT_ICONS[i] ?? Activity;
-            return (
-              <div
-                key={stat.label}
-                className="flex flex-col p-3 lg:p-4 bg-white rounded-xl lg:rounded-2xl border border-slate-100 shadow-sm text-center"
-              >
-                <div className="w-9 h-9 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto mb-2">
-                  <Icon size={18} strokeWidth={2.25} />
-                </div>
-                <p className="text-[11px] lg:text-xs font-black text-slate-500 mb-1">{stat.label}</p>
-                <p className="text-xl lg:text-3xl font-black text-brand-blue leading-none" dir="ltr">
-                  {stat.value}
-                </p>
-              </div>
-            );
-          })}
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 lg:gap-3">
-          {attachments.map((item) => (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 lg:gap-4">
+          {options.map((opt) => (
             <div
-              key={item.label}
-              className="flex items-center justify-between gap-3 p-3 lg:p-4 bg-slate-50 rounded-xl border border-slate-100 text-right"
+              key={opt.tag}
+              className="flex flex-col p-4 lg:p-5 bg-white rounded-2xl border-2 border-slate-100 shadow-sm text-right"
             >
-              <span className="text-2xl lg:text-3xl font-black text-emerald-600 shrink-0" dir="ltr">
-                {item.display}
+              <span className="self-start px-3 py-1 rounded-full bg-amber-100 text-amber-700 text-xs lg:text-sm font-black mb-3">
+                {opt.tag}
               </span>
-              <span className="text-xs lg:text-sm font-black text-slate-600">{item.label}</span>
+              <p className="text-base lg:text-lg font-black text-brand-blue mb-1.5">{opt.title}</p>
+              <p className="text-xs lg:text-sm font-semibold text-slate-600 leading-relaxed">{opt.desc}</p>
             </div>
           ))}
         </div>
       </div>
-      <p className="mt-3 lg:mt-4 p-4 lg:p-5 rounded-xl bg-emerald-50 border border-emerald-200 text-sm lg:text-base font-bold text-emerald-800 text-right leading-relaxed">
-        {conclusion}
+      <p className="mt-4 lg:mt-5 p-4 lg:p-5 rounded-xl bg-brand-blue/5 border border-brand-blue/10 text-sm lg:text-base font-bold text-brand-blue text-right leading-relaxed">
+        {note}
       </p>
     </div>
   );
 };
 
-const TAKEAWAY_TAG_STYLES = [
-  'bg-amber-100 text-amber-700',
+const SlideGroups = () => {
+  const { title, subtitle, intro, groups, note } = CONTENT.groups;
+
+  return (
+    <div className="presentation-slide flex flex-col">
+      <SlideHeader title={title} subtitle={subtitle} />
+      <p className="text-sm lg:text-lg font-bold text-slate-600 mb-4 lg:mb-5 text-right leading-relaxed">
+        {intro}
+      </p>
+      <div className="flex-1 grid grid-cols-2 md:grid-cols-3 gap-3 lg:gap-4 content-center">
+        {groups.map((group, i) => (
+          <div
+            key={group}
+            className="flex items-center gap-3 lg:gap-4 p-4 lg:p-5 bg-white rounded-2xl border-2 border-slate-100 shadow-sm text-right"
+          >
+            <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-xl bg-brand-blue/10 text-brand-blue flex items-center justify-center shrink-0 font-black text-base lg:text-lg">
+              {i + 1}
+            </div>
+            <span className="flex-1 text-sm lg:text-lg font-black text-brand-blue leading-snug">
+              {group}
+            </span>
+            <Sticker size={20} className="text-amber-400 shrink-0" strokeWidth={2.25} />
+          </div>
+        ))}
+      </div>
+      <p className="mt-4 lg:mt-5 p-4 lg:p-5 rounded-xl bg-slate-50 border border-slate-100 text-sm lg:text-base font-bold text-slate-600 text-right leading-relaxed">
+        {note}
+      </p>
+    </div>
+  );
+};
+
+const REWARD_ICONS = [Gift, Layers, Star, Trophy];
+const REWARD_STYLES = [
+  'bg-emerald-100 text-emerald-600',
   'bg-brand-blue/10 text-brand-blue',
-  'bg-emerald-100 text-emerald-700',
+  'bg-amber-100 text-amber-600',
+  'bg-amber-400 text-brand-dark',
 ];
 
-const TAKEAWAY_ACTION_ICONS = [Monitor, Building2, FlaskConical];
+const SlideRewards = () => {
+  const { title, subtitle, intro, tiers, note } = CONTENT.rewards;
 
-const SlideTakeaway = () => {
-  const { title, subtitle, proven, actions, finalStatement } = CONTENT.slideTakeaway;
+  return (
+    <div className="presentation-slide flex flex-col">
+      <SlideHeader title={title} subtitle={subtitle} />
+      <p className="text-sm lg:text-lg font-bold text-slate-600 mb-4 lg:mb-5 text-right leading-relaxed">
+        {intro}
+      </p>
+      <div className="flex-1 grid grid-cols-2 md:grid-cols-4 gap-3 lg:gap-4 content-center">
+        {tiers.map((tier, i) => {
+          const Icon = REWARD_ICONS[i] ?? Gift;
+          return (
+            <div
+              key={tier.tag}
+              className="flex flex-col p-4 lg:p-5 bg-white rounded-2xl border-2 border-slate-100 shadow-sm text-right"
+            >
+              <div className={`w-11 h-11 rounded-xl flex items-center justify-center mb-3 ${REWARD_STYLES[i]}`}>
+                <Icon size={22} strokeWidth={2.25} />
+              </div>
+              <span className="text-[11px] lg:text-xs font-black text-slate-400 mb-1">{tier.tag}</span>
+              <p className="text-sm lg:text-base font-black text-brand-blue mb-1.5">{tier.title}</p>
+              <p className="text-xs lg:text-sm font-semibold text-slate-600 leading-relaxed">{tier.desc}</p>
+            </div>
+          );
+        })}
+      </div>
+      <div className="mt-4 lg:mt-5 flex items-start gap-4 p-4 lg:p-5 rounded-xl bg-amber-50 border-2 border-amber-200 text-right">
+        <Sparkles size={22} className="text-amber-500 shrink-0 mt-0.5" strokeWidth={2.25} />
+        <p className="text-sm lg:text-base font-bold text-amber-800 leading-relaxed">{note}</p>
+      </div>
+    </div>
+  );
+};
+
+const SlideJourney = () => {
+  const { title, subtitle, steps } = CONTENT.journey;
+
+  return (
+    <div className="presentation-slide flex flex-col">
+      <SlideHeader title={title} subtitle={subtitle} />
+      <ul className="flex-1 flex flex-col gap-2.5 lg:gap-3 list-none m-0 p-0 content-center justify-center">
+        {steps.map((step, i) => (
+          <li
+            key={step}
+            className="flex items-center gap-3 lg:gap-4 p-3.5 lg:p-4 bg-white rounded-xl lg:rounded-2xl border border-slate-100 shadow-sm text-right"
+          >
+            <div className="w-10 h-10 lg:w-11 lg:h-11 rounded-xl bg-brand-blue text-white flex items-center justify-center shrink-0 font-black text-base">
+              {i + 1}
+            </div>
+            <span className="flex-1 text-sm lg:text-lg font-bold text-slate-700 leading-snug">{step}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+const SlideRequirements = () => {
+  const { title, subtitle, materials, design, note } = CONTENT.requirements;
+  const materialIcons = [Globe2, Palette, ClipboardList, Ticket, ClipboardList, Sparkles];
+
+  return (
+    <div className="presentation-slide flex flex-col">
+      <SlideHeader title={title} subtitle={subtitle} />
+      <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-5 content-center min-h-0">
+        <div className="flex flex-col gap-2 lg:gap-2.5">
+          <p className="text-[11px] lg:text-xs font-black text-slate-400 uppercase tracking-wide text-right">
+            المواد المطلوبة
+          </p>
+          {materials.map((item, i) => {
+            const Icon = materialIcons[i] ?? CheckCircle2;
+            return (
+              <div
+                key={item}
+                className="flex items-center gap-3 p-2.5 lg:p-3 bg-white rounded-xl border border-slate-100 shadow-sm text-right"
+              >
+                <div className="w-8 h-8 lg:w-9 lg:h-9 rounded-lg bg-brand-blue/10 text-brand-blue flex items-center justify-center shrink-0">
+                  <Icon size={16} strokeWidth={2.25} />
+                </div>
+                <span className="text-xs lg:text-sm font-bold text-slate-700 leading-snug">{item}</span>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="flex flex-col gap-2 lg:gap-2.5">
+          <p className="text-[11px] lg:text-xs font-black text-slate-400 uppercase tracking-wide text-right">
+            طبقتا الملصقات
+          </p>
+          {design.map((item) => (
+            <div
+              key={item.title}
+              className="flex flex-col p-4 lg:p-5 bg-white rounded-2xl border-2 border-amber-200/70 shadow-sm text-right"
+            >
+              <div className="flex items-center gap-2 mb-1.5">
+                <Sticker size={18} className="text-amber-500 shrink-0" strokeWidth={2.25} />
+                <p className="text-base lg:text-lg font-black text-brand-blue">{item.title}</p>
+              </div>
+              <p className="text-xs lg:text-sm font-semibold text-slate-600 leading-relaxed">{item.desc}</p>
+            </div>
+          ))}
+          <p className="mt-auto p-3 lg:p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-xs lg:text-sm font-bold text-emerald-800 text-right leading-relaxed">
+            {note}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const SlideRules = () => {
+  const { title, subtitle, items } = CONTENT.rules;
+
+  return (
+    <div className="presentation-slide flex flex-col">
+      <SlideHeader title={title} subtitle={subtitle} />
+      <ul className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-2.5 lg:gap-3 list-none m-0 p-0 content-center">
+        {items.map((item) => (
+          <li
+            key={item}
+            className="flex items-center gap-3 p-3.5 lg:p-4 bg-white rounded-xl border border-slate-100 shadow-sm text-right"
+          >
+            <CheckCircle2 size={20} className="text-emerald-500 shrink-0" strokeWidth={2.5} />
+            <span className="flex-1 text-xs lg:text-base font-bold text-slate-700 leading-snug">{item}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+const REASON_ICONS = [TrendingUp, Repeat, CalendarDays];
+
+const SlideApprove = () => {
+  const { title, subtitle, reasons, recommendation, finalStatement } = CONTENT.approve;
 
   return (
     <div className="presentation-slide flex flex-col">
@@ -561,44 +457,40 @@ const SlideTakeaway = () => {
       <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4 content-center min-h-0">
         <div className="flex flex-col gap-2 lg:gap-2.5">
           <p className="text-[11px] lg:text-xs font-black text-slate-400 uppercase tracking-wide text-right">
-            {proven.heading}
+            لماذا نعتمده
           </p>
-          {proven.items.map((item, i) => (
-            <div
-              key={item.tag}
-              className="flex items-center gap-3 p-3.5 lg:p-4 bg-white rounded-xl border border-slate-100 shadow-sm text-right"
-            >
-              <span
-                className={`px-3 py-1 rounded-full text-[11px] lg:text-sm font-black shrink-0 ${TAKEAWAY_TAG_STYLES[i]}`}
+          {reasons.map((reason, i) => {
+            const Icon = REASON_ICONS[i] ?? CheckCircle2;
+            return (
+              <div
+                key={reason.title}
+                className="flex items-center gap-3 p-3 lg:p-3.5 bg-white rounded-xl border border-slate-100 shadow-sm text-right"
               >
-                {item.tag}
-              </span>
-              <span className="text-xs lg:text-sm font-bold text-slate-700 leading-snug">{item.text}</span>
-            </div>
-          ))}
+                <div className="w-9 h-9 lg:w-10 lg:h-10 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
+                  <Icon size={18} strokeWidth={2.25} />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-xs lg:text-base font-black text-brand-blue">{reason.title}</p>
+                  <p className="text-[11px] lg:text-sm font-semibold text-slate-600 leading-snug">{reason.desc}</p>
+                </div>
+              </div>
+            );
+          })}
         </div>
 
         <div className="flex flex-col gap-2 lg:gap-2.5">
           <p className="text-[11px] lg:text-xs font-black text-slate-400 uppercase tracking-wide text-right">
-            {actions.heading}
+            النسخة الموصى بها
           </p>
-          {actions.items.map((item, i) => {
-            const Icon = TAKEAWAY_ACTION_ICONS[i] ?? Activity;
-            return (
-              <div
-                key={item.lead}
-                className="flex items-center gap-3 p-2.5 lg:p-3 bg-white rounded-xl border border-slate-100 shadow-sm text-right"
-              >
-                <div className="w-8 h-8 lg:w-9 lg:h-9 rounded-lg bg-brand-blue/10 text-brand-blue flex items-center justify-center shrink-0">
-                  <Icon size={16} strokeWidth={2.25} />
-                </div>
-                <span className="text-xs lg:text-sm font-black text-brand-blue shrink-0">{item.lead}</span>
-                <span className="text-[11px] lg:text-sm font-bold text-slate-600 leading-snug">
-                  {item.action}
-                </span>
-              </div>
-            );
-          })}
+          {recommendation.map((item) => (
+            <div
+              key={item}
+              className="flex items-center gap-3 p-2.5 lg:p-3 bg-white rounded-xl border border-slate-100 shadow-sm text-right"
+            >
+              <Star size={16} className="text-amber-400 shrink-0" strokeWidth={2.5} />
+              <span className="text-[11px] lg:text-sm font-bold text-slate-700 leading-snug">{item}</span>
+            </div>
+          ))}
         </div>
       </div>
 
@@ -607,301 +499,6 @@ const SlideTakeaway = () => {
           <CheckCircle2 size={24} strokeWidth={2.25} />
         </div>
         <p className="text-sm lg:text-xl font-black leading-relaxed">{finalStatement}</p>
-      </div>
-    </div>
-  );
-};
-
-const MetricsPanel = ({ metrics }: { metrics: { label: string; value: string }[] }) => (
-  <div className="grid grid-cols-2 md:grid-cols-5 gap-px bg-white/10 rounded-2xl overflow-hidden border border-brand-blue shadow-lg shadow-brand-blue/20">
-    {metrics.map((m) => (
-      <div key={m.label} className="bg-brand-blue p-3 lg:p-4 text-right">
-        <p className="text-[10px] lg:text-[11px] font-black text-amber-300/90 uppercase tracking-wide mb-1">
-          {m.label}
-        </p>
-        <p className="text-[11px] lg:text-sm font-bold text-white leading-snug">{m.value}</p>
-      </div>
-    ))}
-  </div>
-);
-
-const PointList = ({
-  points,
-  icons,
-  accent = 'bg-brand-blue/10 text-brand-blue',
-}: {
-  points: string[];
-  icons: (typeof Activity)[];
-  accent?: string;
-}) => (
-  <ul className="space-y-2 lg:space-y-2.5 list-none m-0 p-0">
-    {points.map((point, i) => {
-      const Icon = icons[i] ?? Activity;
-      return (
-        <li
-          key={point}
-          className="flex items-center gap-3 p-3 lg:p-3.5 bg-white rounded-xl border border-slate-100 shadow-sm text-right"
-        >
-          <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${accent}`}>
-            <Icon size={17} strokeWidth={2.25} />
-          </div>
-          <span className="text-xs lg:text-base font-bold text-slate-700 leading-snug">{point}</span>
-        </li>
-      );
-    })}
-  </ul>
-);
-
-const ACTIVATION_OBJECTIVE_ICONS = [Monitor, Building2, FlaskConical];
-
-const SlideActivationIntro = () => {
-  const { eyebrow, badge, title, subtitle, intro, objectives, rule, conclusion } =
-    CONTENT.slideActivationIntro;
-
-  return (
-    <div className="presentation-slide !p-0 flex items-stretch">
-      <div className="relative w-full h-full rounded-[2rem] lg:rounded-[2.5rem] bg-gradient-to-br from-brand-blue via-[#2a3c7a] to-[#1d2b5c] overflow-hidden shadow-2xl shadow-brand-blue/30 flex flex-col justify-center p-6 md:p-10 lg:p-14">
-        <div className="pointer-events-none absolute -top-32 -left-32 w-[420px] h-[420px] bg-amber-400/15 rounded-full blur-[110px]" />
-        <div className="pointer-events-none absolute -bottom-40 -right-20 w-[420px] h-[420px] bg-white/10 rounded-full blur-[110px]" />
-
-        <div className="relative flex items-center justify-between gap-4 mb-5 lg:mb-7">
-          <div className="flex items-center gap-3 text-right">
-            <span className="px-4 py-2 rounded-full bg-amber-400 text-brand-dark text-sm lg:text-lg font-black shadow-lg shadow-amber-400/30 whitespace-nowrap">
-              {badge} ←
-            </span>
-            <span className="text-xs lg:text-base font-black text-white/70 tracking-wide">{eyebrow}</span>
-          </div>
-          <span className="hidden md:block h-px flex-1 bg-gradient-to-l from-amber-400/60 to-transparent" />
-        </div>
-
-        <div className="relative text-right mb-3 lg:mb-4">
-          <h2 className="text-3xl md:text-4xl lg:text-[3.25rem] font-black text-white leading-tight mb-2">
-            {title}
-          </h2>
-          <p className="text-base lg:text-2xl font-bold text-amber-300">{subtitle}</p>
-        </div>
-
-        <p className="relative text-sm lg:text-lg font-bold text-white/75 mb-5 lg:mb-7 text-right leading-relaxed max-w-4xl mr-0 ml-auto">
-          {intro}
-        </p>
-
-        <div className="relative grid grid-cols-1 md:grid-cols-3 gap-3 lg:gap-4 mb-5 lg:mb-7">
-          {objectives.map((obj, i) => {
-            const Icon = ACTIVATION_OBJECTIVE_ICONS[i] ?? Activity;
-            return (
-              <div
-                key={obj.title}
-                className="flex flex-col items-center p-4 lg:p-6 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/15 text-center"
-              >
-                <div className="w-12 h-12 lg:w-14 lg:h-14 rounded-2xl bg-amber-400/20 text-amber-300 flex items-center justify-center mb-3">
-                  <Icon size={26} strokeWidth={2.25} />
-                </div>
-                <p className="text-base lg:text-xl font-black text-white mb-1.5">{obj.title}</p>
-                <p className="text-xs lg:text-sm font-semibold text-white/70 leading-relaxed">{obj.desc}</p>
-              </div>
-            );
-          })}
-        </div>
-
-        <div className="relative flex items-center gap-3 p-4 lg:p-5 bg-amber-400 text-brand-dark rounded-xl shadow-lg shadow-amber-400/25 text-right">
-          <Target size={22} className="shrink-0" strokeWidth={2.5} />
-          <p className="text-sm lg:text-lg font-black leading-snug">{rule}</p>
-        </div>
-
-        <p className="relative mt-3 text-xs lg:text-base font-bold text-white/65 text-right leading-relaxed">
-          {conclusion}
-        </p>
-      </div>
-    </div>
-  );
-};
-
-const SlideDigitalMenu = () => {
-  const { title, subtitle, points, note, metrics } = CONTENT.slideDigitalMenu;
-
-  return (
-    <div className="presentation-slide flex flex-col">
-      <SlideHeader title={title} subtitle={subtitle} />
-      <div className="flex-1 flex flex-col gap-3 justify-center min-h-0">
-        <PointList points={points} icons={[Monitor, Star, RefreshCw, QrCode, TrendingUp]} />
-        <p className="text-xs lg:text-sm font-bold text-amber-800 text-right leading-relaxed p-3 lg:p-4 bg-amber-50 rounded-xl border border-amber-200">
-          {note}
-        </p>
-      </div>
-      <div className="mt-3 lg:mt-4">
-        <MetricsPanel metrics={metrics} />
-      </div>
-    </div>
-  );
-};
-
-const SlideB2B = () => {
-  const { title, subtitle, points, note, metrics } = CONTENT.slideB2B;
-
-  return (
-    <div className="presentation-slide flex flex-col">
-      <SlideHeader title={title} subtitle={subtitle} />
-      <div className="flex-1 flex flex-col gap-3 justify-center min-h-0">
-        <PointList
-          points={points}
-          icons={[Package, Banknote, CreditCard, Megaphone, Building2]}
-          accent="bg-emerald-100 text-emerald-600"
-        />
-        <p className="text-xs lg:text-sm font-bold text-emerald-800 text-right leading-relaxed p-3 lg:p-4 bg-emerald-50 rounded-xl border border-emerald-200">
-          {note}
-        </p>
-      </div>
-      <div className="mt-3 lg:mt-4">
-        <MetricsPanel metrics={metrics} />
-      </div>
-    </div>
-  );
-};
-
-const TOWER_OFFER_ICONS = [BadgePercent, Truck, CalendarDays];
-
-const SlideTowers = () => {
-  const { title, subtitle, schedule, offers, note, metrics } = CONTENT.slideTowers;
-
-  return (
-    <div className="presentation-slide flex flex-col">
-      <SlideHeader title={title} subtitle={subtitle} />
-      <div className="flex-1 flex flex-col gap-3 justify-center min-h-0">
-        <div className="grid grid-cols-4 md:grid-cols-7 gap-1.5 lg:gap-2">
-          {schedule.map((slot) => (
-            <div
-              key={slot.day}
-              className="flex flex-col items-center p-2.5 lg:p-3 bg-white rounded-xl border border-slate-100 shadow-sm text-center"
-            >
-              <p className="text-[10px] lg:text-xs font-black text-slate-400 mb-1">{slot.day}</p>
-              <div className="w-8 h-8 lg:w-9 lg:h-9 rounded-lg bg-brand-blue/10 text-brand-blue flex items-center justify-center mb-1">
-                <Building2 size={16} strokeWidth={2.25} />
-              </div>
-              <p className="text-[11px] lg:text-sm font-black text-brand-blue">{slot.tower}</p>
-            </div>
-          ))}
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-2 lg:gap-3">
-          {offers.map((offer, i) => {
-            const Icon = TOWER_OFFER_ICONS[i] ?? Activity;
-            return (
-              <div
-                key={offer.label}
-                className="flex items-center gap-3 p-3 lg:p-4 bg-white rounded-xl border border-slate-100 shadow-sm text-right"
-              >
-                <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
-                  <Icon size={19} strokeWidth={2.25} />
-                </div>
-                <div className="min-w-0">
-                  <p className="text-[10px] lg:text-xs font-black text-slate-400 mb-0.5">{offer.label}</p>
-                  <p className="text-xs lg:text-sm font-black text-slate-700 leading-snug">{offer.value}</p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        <p className="text-xs lg:text-sm font-bold text-slate-600 text-right leading-relaxed p-3 lg:p-4 bg-slate-50 rounded-xl border border-slate-100">
-          {note}
-        </p>
-      </div>
-      <div className="mt-3 lg:mt-4">
-        <MetricsPanel metrics={metrics} />
-      </div>
-    </div>
-  );
-};
-
-const SlideSummerDraft = () => {
-  const { title, subtitle, concept, tests, voting, decisionRule, metrics } = CONTENT.slideSummerDraft;
-
-  return (
-    <div className="presentation-slide flex flex-col">
-      <SlideHeader title={title} subtitle={subtitle} />
-      <div className="flex-1 flex flex-col gap-3 justify-center min-h-0">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 lg:gap-2.5">
-          {concept.map((item, i) => (
-            <div
-              key={item}
-              className="flex items-center gap-3 p-3 lg:p-3.5 bg-white rounded-xl border border-slate-100 shadow-sm text-right"
-            >
-              <div className="w-9 h-9 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center shrink-0">
-                {i === 0 ? <Coffee size={17} strokeWidth={2.25} /> : <FlaskConical size={17} strokeWidth={2.25} />}
-              </div>
-              <span className="text-xs lg:text-sm font-bold text-slate-700 leading-snug">{item}</span>
-            </div>
-          ))}
-        </div>
-
-        <div className="text-right">
-          <p className="text-[11px] lg:text-xs font-black text-slate-400 uppercase tracking-wide mb-1.5">
-            ماذا نختبر فعليًا؟
-          </p>
-          <div className="flex flex-wrap gap-1.5 lg:gap-2 justify-start">
-            {tests.map((test) => (
-              <span
-                key={test}
-                className="px-3 py-1.5 rounded-full bg-slate-100 text-slate-600 text-[11px] lg:text-sm font-black"
-              >
-                {test}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        <div className="flex items-center gap-3 p-3 lg:p-3.5 bg-brand-blue text-white rounded-xl shadow-lg shadow-brand-blue/20 text-right">
-          <QrCode size={20} className="text-amber-300 shrink-0" strokeWidth={2.25} />
-          <p className="text-xs lg:text-sm font-black leading-snug">{voting}</p>
-        </div>
-
-        <div className="flex items-center gap-3 p-3 lg:p-3.5 bg-amber-50 rounded-xl border-2 border-amber-200 text-right">
-          <AlertTriangle size={20} className="text-amber-500 shrink-0" strokeWidth={2.25} />
-          <p className="text-xs lg:text-sm font-black text-amber-800 leading-snug">{decisionRule}</p>
-        </div>
-      </div>
-      <div className="mt-3 lg:mt-4">
-        <MetricsPanel metrics={metrics} />
-      </div>
-    </div>
-  );
-};
-
-const SlideEarlyBird = () => {
-  const { title, subtitle, offer, confirmations, metrics } = CONTENT.slideEarlyBird;
-
-  return (
-    <div className="presentation-slide flex flex-col">
-      <SlideHeader title={title} subtitle={subtitle} />
-      <div className="flex-1 flex flex-col gap-3 justify-center min-h-0">
-        <div className="flex items-center gap-4 lg:gap-5 p-4 lg:p-5 bg-amber-500 text-white rounded-2xl shadow-lg shadow-amber-500/25 text-right">
-          <div className="w-12 h-12 lg:w-14 lg:h-14 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
-            <Sunrise size={26} strokeWidth={2.25} />
-          </div>
-          <div className="min-w-0">
-            <p className="text-lg lg:text-2xl font-black leading-tight mb-0.5">{offer.time}</p>
-            <p className="text-xs lg:text-base font-bold text-white/90">{offer.items}</p>
-            <p className="text-[11px] lg:text-sm font-bold text-white/80 mt-0.5">{offer.price}</p>
-          </div>
-        </div>
-
-        <p className="text-[11px] lg:text-xs font-black text-slate-400 uppercase tracking-wide text-right">
-          ما الذي يجب تأكيده قبل التثبيت؟
-        </p>
-        <ul className="space-y-1.5 lg:space-y-2 list-none m-0 p-0">
-          {confirmations.map((item) => (
-            <li
-              key={item}
-              className="flex items-center gap-3 p-2.5 lg:p-3 bg-white rounded-xl border border-slate-100 shadow-sm text-right"
-            >
-              <CheckCircle2 size={16} className="text-amber-500 shrink-0" strokeWidth={2.5} />
-              <span className="text-xs lg:text-sm font-bold text-slate-700 leading-snug">{item}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className="mt-3 lg:mt-4">
-        <MetricsPanel metrics={metrics} />
       </div>
     </div>
   );
