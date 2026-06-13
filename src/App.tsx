@@ -280,28 +280,39 @@ const SlideGroups = () => {
   return (
     <div className="presentation-slide flex flex-col">
       <SlideHeader title={title} subtitle={subtitle} />
-      <p className="text-sm lg:text-lg font-bold text-slate-600 mb-4 lg:mb-5 text-right leading-relaxed">
-        {intro}
-      </p>
-      <div className="flex-1 grid grid-cols-2 md:grid-cols-3 gap-3 lg:gap-4 content-center">
-        {groups.map((group, i) => (
-          <div
-            key={group}
-            className="flex items-center gap-3 lg:gap-4 p-4 lg:p-5 bg-white rounded-2xl border-2 border-slate-100 shadow-sm text-right"
-          >
-            <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-xl bg-brand-blue/10 text-brand-blue flex items-center justify-center shrink-0 font-black text-base lg:text-lg">
-              {i + 1}
-            </div>
-            <span className="flex-1 text-sm lg:text-lg font-black text-brand-blue leading-snug">
-              {group}
-            </span>
-            <Sticker size={20} className="text-amber-400 shrink-0" strokeWidth={2.25} />
+      <div className="flex-1 grid grid-cols-1 md:grid-cols-5 gap-4 lg:gap-6 items-center min-h-0">
+        <div className="md:col-span-2 flex items-center justify-center h-full">
+          <img
+            src="/wc-collection-map.png"
+            alt="بطاقة جمع الملصقات — ست مجموعات"
+            className="max-h-[56vh] w-auto rounded-2xl shadow-xl border border-slate-100 object-contain"
+          />
+        </div>
+        <div className="md:col-span-3 flex flex-col gap-3 lg:gap-4">
+          <p className="text-sm lg:text-lg font-bold text-slate-600 text-right leading-relaxed">
+            {intro}
+          </p>
+          <div className="grid grid-cols-2 gap-2.5 lg:gap-3">
+            {groups.map((group, i) => (
+              <div
+                key={group}
+                className="flex items-center gap-2.5 lg:gap-3 p-3 lg:p-3.5 bg-white rounded-xl lg:rounded-2xl border-2 border-slate-100 shadow-sm text-right"
+              >
+                <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-lg bg-brand-blue/10 text-brand-blue flex items-center justify-center shrink-0 font-black text-sm lg:text-base">
+                  {i + 1}
+                </div>
+                <span className="flex-1 text-xs lg:text-base font-black text-brand-blue leading-snug">
+                  {group}
+                </span>
+                <Sticker size={18} className="text-amber-400 shrink-0" strokeWidth={2.25} />
+              </div>
+            ))}
           </div>
-        ))}
+          <p className="p-3.5 lg:p-4 rounded-xl bg-slate-50 border border-slate-100 text-xs lg:text-sm font-bold text-slate-600 text-right leading-relaxed">
+            {note}
+          </p>
+        </div>
       </div>
-      <p className="mt-4 lg:mt-5 p-4 lg:p-5 rounded-xl bg-slate-50 border border-slate-100 text-sm lg:text-base font-bold text-slate-600 text-right leading-relaxed">
-        {note}
-      </p>
     </div>
   );
 };
@@ -355,19 +366,26 @@ const SlideJourney = () => {
   return (
     <div className="presentation-slide flex flex-col">
       <SlideHeader title={title} subtitle={subtitle} />
-      <ul className="flex-1 flex flex-col gap-2.5 lg:gap-3 list-none m-0 p-0 content-center justify-center">
-        {steps.map((step, i) => (
-          <li
-            key={step}
-            className="flex items-center gap-3 lg:gap-4 p-3.5 lg:p-4 bg-white rounded-xl lg:rounded-2xl border border-slate-100 shadow-sm text-right"
-          >
-            <div className="w-10 h-10 lg:w-11 lg:h-11 rounded-xl bg-brand-blue text-white flex items-center justify-center shrink-0 font-black text-base">
-              {i + 1}
-            </div>
-            <span className="flex-1 text-sm lg:text-lg font-bold text-slate-700 leading-snug">{step}</span>
-          </li>
-        ))}
-      </ul>
+      <div className="flex-1 flex flex-col gap-4 lg:gap-5 justify-center min-h-0">
+        <img
+          src="/wc-journey-banner.png"
+          alt="رحلة العميل — اشترِ الباقة، خذ الملصق، أكمل المجموعة، افتح المكافأة"
+          className="w-full max-h-[38vh] object-contain rounded-2xl shadow-lg border border-slate-100"
+        />
+        <ul className="grid grid-cols-2 lg:grid-cols-3 gap-2.5 lg:gap-3 list-none m-0 p-0">
+          {steps.map((step, i) => (
+            <li
+              key={step}
+              className="flex items-center gap-2.5 lg:gap-3 p-3 lg:p-3.5 bg-white rounded-xl border border-slate-100 shadow-sm text-right"
+            >
+              <div className="w-7 h-7 lg:w-9 lg:h-9 rounded-lg bg-brand-blue text-white flex items-center justify-center shrink-0 font-black text-xs lg:text-sm">
+                {i + 1}
+              </div>
+              <span className="flex-1 text-[11px] lg:text-sm font-bold text-slate-700 leading-snug">{step}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };
@@ -400,23 +418,26 @@ const SlideRequirements = () => {
           })}
         </div>
 
-        <div className="flex flex-col gap-2 lg:gap-2.5">
+        <div className="flex flex-col gap-2.5 lg:gap-3">
           <p className="text-[11px] lg:text-xs font-black text-slate-400 uppercase tracking-wide text-right">
             طبقتا الملصقات
           </p>
+          <img
+            src="/wc-stickers.png"
+            alt="ورقة ملصقات الدول — إصدار محدود"
+            className="w-full max-h-[26vh] object-contain rounded-2xl border border-slate-100 shadow-md bg-white"
+          />
           {design.map((item) => (
             <div
               key={item.title}
-              className="flex flex-col p-4 lg:p-5 bg-white rounded-2xl border-2 border-amber-200/70 shadow-sm text-right"
+              className="flex items-center gap-2.5 p-2.5 lg:p-3 bg-white rounded-xl border border-amber-200/70 shadow-sm text-right"
             >
-              <div className="flex items-center gap-2 mb-1.5">
-                <Sticker size={18} className="text-amber-500 shrink-0" strokeWidth={2.25} />
-                <p className="text-base lg:text-lg font-black text-brand-blue">{item.title}</p>
-              </div>
-              <p className="text-xs lg:text-sm font-semibold text-slate-600 leading-relaxed">{item.desc}</p>
+              <Sticker size={16} className="text-amber-500 shrink-0" strokeWidth={2.25} />
+              <p className="text-xs lg:text-sm font-black text-brand-blue shrink-0">{item.title}</p>
+              <span className="text-[11px] lg:text-xs font-semibold text-slate-600 leading-snug">{item.desc}</span>
             </div>
           ))}
-          <p className="mt-auto p-3 lg:p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-xs lg:text-sm font-bold text-emerald-800 text-right leading-relaxed">
+          <p className="p-2.5 lg:p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-[11px] lg:text-xs font-bold text-emerald-800 text-right leading-relaxed">
             {note}
           </p>
         </div>
